@@ -17,7 +17,7 @@ router.post('/signup', signupvalidation, async (req, res) => {
         const users = new usermodel({ fname, lname, mobile, email, password, age });
         users.password = await bcrypt.hash(password, 10);
         await users.save();
-        const jwt = jwttoken.sign(
+        const jwt = jwttoken.sign( 
             { email: users.email, _id: users._id },
             process.env.jwt_code,
             { expiresIn: '20h' }

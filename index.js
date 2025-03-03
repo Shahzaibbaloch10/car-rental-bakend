@@ -1,6 +1,10 @@
 const express = require('express');
 const port = process.env.port||8080 ;
+const http = require('http')
+const {Server}= require('socket.io')
+
 const app = express();
+const server = http.createServer(app)
 const bodyParser= require('body-parser')
 require('dotenv').config();
 const mongodb = require('mongoose');
@@ -17,6 +21,7 @@ console.log('db is conected')
 .catch((err)=>{
     console.log(err)
 })
+
 app.use(cors({
     origin: "http://localhost:3000", // ✅ Frontend ka URL allow karo
     credentials: true, // ✅ Cookies aur authentication ke liye zaroori
@@ -31,4 +36,4 @@ app.use('/user', router);
 app.use('/car' ,carrouter);
 app.use('/auth',authrouter);
 
-app.listen(port ,()=>console.log(`server started ${port}  `))
+server.listen(port ,()=>console.log(`server started ${port}  `))

@@ -14,7 +14,7 @@ module.exports = (req, res, next) => {
      
 
         const decoded = jwt.verify(token, process.env.jwt_code);
-        req.user = decoded; // User object set karo
+        req.user = decoded; 
         next();
     } catch (error) {
         return res.status(400).json({ success: false, message: "Invalid Token!" });
