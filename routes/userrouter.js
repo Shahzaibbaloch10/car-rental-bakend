@@ -3,6 +3,7 @@ const usermodel = require('../models/user');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const jwttoken = require('jsonwebtoken');
+const varify = require('../middlewear/varify');
 const router = express.Router();
 router.post('/signup', signupvalidation, async (req, res) => {
     try {
@@ -105,6 +106,29 @@ res.clearCookie("token",{
 })
 res.send({success :true,message:"logoutcokies"})
 } )
+
+router.get('/profile' ,varify ,async (req,res)=>{
+try {
+    const userid = req.user._id;
+const user= await usermodel.findById(userid)
+if(!user){
+    res.status(400).json({
+success:"false",
+message:'this id is not valid'
+    })
+}
+
+res.status(200).json({
+    success:true,
+    user
+})
+} catch (error) {
+    res.status(400).json({ success: false, message: "nul", error: error })
+    console.log(error)
+}
+
+} )
+
 
 module.exports =
     router

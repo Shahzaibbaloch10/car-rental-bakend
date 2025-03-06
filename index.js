@@ -11,6 +11,7 @@ const mongodb = require('mongoose');
 const router = require('./routes/userrouter');
 const carrouter= require('./routes/carsrouter');
 const authrouter= require('./routes/auth');
+const bookingrouter= require('./routes/booking')
 const dbconnect= process.env.db;
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
@@ -35,5 +36,6 @@ app.use(cookieParser())
 app.use('/user', router);
 app.use('/car' ,carrouter);
 app.use('/auth',authrouter);
+app.use('/book',bookingrouter)
 
 server.listen(port ,()=>console.log(`server started ${port}  `))
